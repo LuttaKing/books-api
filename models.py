@@ -1,5 +1,4 @@
-from pydantic import BaseModel
-from typing import Union
+
 
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
@@ -28,8 +27,5 @@ class Item(Base):
     owner = relationship("User", back_populates="items")
 
 
-class Book(BaseModel):
-    name: str
-    description: Union[str, None] = None
-    price: float
+
     
