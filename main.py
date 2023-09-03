@@ -37,9 +37,8 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
     return db_user
 
 
-@app.post("/users/{user_id}/items/", response_model=schema.ItemSchema)
-def create_item(
-    user_id: int, item: schema.ItemSchema, db: Session = Depends(get_db)
+@app.post("/users/items/", response_model=schema.ItemReturnSchema)
+def create_item( item: schema.ItemSchema, db: Session = Depends(get_db)
 ):
     return crud.create_item(db=db, item=item)
 

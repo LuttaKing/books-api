@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel,field_validator
 
 
 class ItemSchema(BaseModel):
@@ -7,8 +7,23 @@ class ItemSchema(BaseModel):
     title: str
     description: str | None = None
 
+    @field_validator('title')
+    def title_must_be_caps(cls,value):
+        if not value.isupper():
+            raise ValueError('title must be upper case')
+        return value
+
+
     class Config:
-        orm_mode = True
+        from_attributes = True
+
+# just schema for return item
+class ItemReturnSchema(BaseModel):
+    title: str
+    description: str | None = None
+
+    class Config:
+        from_attributes = True
 
 
 class UserSchema(BaseModel):
@@ -19,4 +34,4 @@ class UserSchema(BaseModel):
     items: list[ItemSchema] = []
 
     class Config:
-        orm_mode = True
+        from_attributes = True
