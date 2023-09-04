@@ -1,7 +1,8 @@
 
 
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String,DateTime
 from sqlalchemy.orm import relationship
+from datetime import datetime
 
 from database import Base
 
@@ -10,7 +11,10 @@ class User(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String, unique=True, index=True)
-    hashed_password = Column(String)
+    hashed_password = Column(String(30))
+    userename = Column(String(30))
+    created = Column('created_on', DateTime, default=datetime.now)
+    updated = Column('last_updated', DateTime, onupdate=datetime.now)
     is_active = Column(Boolean, default=True)
 
     items = relationship("Item", back_populates="owner")

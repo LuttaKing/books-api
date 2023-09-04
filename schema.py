@@ -31,7 +31,7 @@ class UserSchema(BaseModel):
     email: str
     hashed_password: str
     is_active: bool
-    items: list[ItemSchema] = []
+    items: list[ItemSchema] | None = []
 
     class Config:
         from_attributes = True
