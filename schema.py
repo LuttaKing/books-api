@@ -27,7 +27,7 @@ class ItemReturnSchema(BaseModel):
 
 
 class UserSchema(BaseModel):
-    id: int
+    id: int | None
     email: str
     hashed_password: str
     is_active: bool

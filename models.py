@@ -5,7 +5,6 @@ from sqlalchemy.orm import relationship
 from datetime import datetime
 
 from database import Base
-
 class User(Base):
     __tablename__ = "users"
 
@@ -16,8 +15,7 @@ class User(Base):
     created = Column('created_on', DateTime, default=datetime.now)
     updated = Column('last_updated', DateTime, onupdate=datetime.now)
     is_active = Column(Boolean, default=True)
-
-    items = relationship("Item", back_populates="owner")
+    items = relationship("Item", back_populates="owner",cascade='all, delete')
 
 
 class Item(Base):
@@ -27,7 +25,6 @@ class Item(Base):
     title = Column(String, index=True)
     description = Column(String, index=True)
     owner_id = Column(Integer, ForeignKey("users.id"))
-
     owner = relationship("User", back_populates="items")
 
 

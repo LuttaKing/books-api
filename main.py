@@ -38,6 +38,25 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
 
+@app.delete("/users/{user_id}")
+def delete_user(user_id: int, db: Session = Depends(get_db)):
+    db_user = crud.delete_user(db, user_id=user_id)
+
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    else:
+        return {'message':f'succes deleted {db_user.email}' }
+    
+
+@app.put("/users/{user_id}")
+def update_user(user_id: int,user: schema.UserSchema, db: Session = Depends(get_db)):
+    db_user = crud.update_user(db, user=user)
+
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    else:
+        return {'message':f'succes updated {db_user.email}' }
+
 
 @app.post("/users/items/", response_model=schema.ItemReturnSchema)
 def create_item( item: schema.ItemSchema, db: Session = Depends(get_db)

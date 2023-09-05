@@ -6,6 +6,28 @@ import models, schema
 def get_user(db: Session, user_id: int):
     return db.query(models.User).filter(models.User.id == user_id).first()
 
+def delete_user(db: Session, user_id: int):
+    db_user=get_user(db,user_id)
+    if db_user is not None:
+        db.delete(db_user)
+        db.commit()
+        return db_user
+    else:
+        return None
+    
+def update_user(db: Session, user:  schema.UserSchema):
+    db_user=get_user(db,user.id)
+    if db_user is not None:
+    
+        for key, value in user.dict().items():
+            setattr(db_user, key, value) if value else None
+        
+        db.commit()
+        db.refresh(db_user)
+        return db_user
+    else:
+        return None
+
 
 def get_user_by_email(db: Session, email: str):
     return db.query(models.User).filter(models.User.email == email).first()
