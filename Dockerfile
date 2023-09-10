@@ -2,7 +2,7 @@ FROM python:3.10.7
 
 WORKDIR /app
 
-COPY . /app
+COPY . .
 
 # Expose the port that the application will be running on
 EXPOSE 8000
